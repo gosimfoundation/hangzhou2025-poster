@@ -8,27 +8,32 @@ import networkingIcon from '../assets/icons/networking.svg';
 const topicsRow1 = [
   {
     name: "具身智能",
-    icon: aimodelsIcon.src
+    icon: aimodelsIcon.src,
+    color: "#f4f593"
   },
   {
     name: "未来AI",
-    icon: startupsIcon.src
+    icon: startupsIcon.src,
+    color: "#fffddf"
   }
 ];
 
 const topicRow2 = {
   name: "模型和基础设施",
-  icon: foundationIcon.src
+  icon: foundationIcon.src,
+  color: "#f0f0f0"
 };
 
 const topicsRow3 = [
   {
     name: "智能体应用",
-    icon: collaborationIcon.src
+    icon: collaborationIcon.src,
+    color: "#adffce"
   },
   {
     name: "智能互联网",
-    icon: networkingIcon.src
+    icon: networkingIcon.src,
+    color: "#93ecff"
   }
 ];
 
@@ -44,8 +49,8 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
     <!-- Row 1 -->
     {topicsRow1.map((topic) => (
       <div class="topic-item">
-        <div class="topic-text-box horizontal">
-          <div class="icon-wrapper inline">
+        <div class="topic-text-box horizontal" style={`background: ${topic.color}80;`}>
+          <div class="icon-wrapper inline" style={`background: ${topic.color};`}>
             <img src={topic.icon} alt={topic.name} class="topic-icon" />
           </div>
           <span class="topic-name">{topic.name}</span>
@@ -55,8 +60,8 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
     
     <!-- Row 2 - Full width -->
     <div class="topic-item full-row">
-      <div class="topic-text-box horizontal">
-        <div class="icon-wrapper inline">
+      <div class="topic-text-box horizontal" style={`background: ${topicRow2.color}80;`}>
+        <div class="icon-wrapper inline" style={`background: ${topicRow2.color};`}>
           <img src={topicRow2.icon} alt={topicRow2.name} class="topic-icon" />
         </div>
         <span class="topic-name">{topicRow2.name}</span>
@@ -66,8 +71,8 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
     <!-- Row 3 -->
     {topicsRow3.map((topic) => (
       <div class="topic-item">
-        <div class="topic-text-box horizontal">
-          <div class="icon-wrapper inline">
+        <div class="topic-text-box horizontal" style={`background: ${topic.color}80;`}>
+          <div class="icon-wrapper inline" style={`background: ${topic.color};`}>
             <img src={topic.icon} alt={topic.name} class="topic-icon" />
           </div>
           <span class="topic-name">{topic.name}</span>
@@ -82,10 +87,77 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
     width: 100%;
     max-width: 480px;
     margin: 0 auto;
-    background: linear-gradient(135deg, #f5bcd8 0%, #a9e5cf 100%);
+    background: transparent;
     padding: 1.5rem;
     border-radius: 0;
     margin-bottom: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .topics-container::before,
+  .topics-container::after,
+  .topics-grid::before,
+  .topics-grid::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: #fffddf;
+    opacity: 0.3;
+    clip-path: polygon(
+      50% 0%,
+      60% 40%,
+      100% 50%,
+      60% 60%,
+      50% 100%,
+      40% 60%,
+      0% 50%,
+      40% 40%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .topics-container::before {
+    top: 10px;
+    left: 20px;
+    transform: rotate(15deg);
+    background: #fffddf;
+    opacity: 0.3;
+  }
+  
+  .topics-container::after {
+    bottom: 20px;
+    right: 30px;
+    transform: rotate(-20deg);
+    background: #93ecff;
+    opacity: 0.25;
+  }
+  
+  .topics-grid {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .topics-grid::before {
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%) rotate(45deg);
+    background: #adffce;
+    opacity: 0.2;
+    width: 45px;
+    height: 45px;
+  }
+  
+  .topics-grid::after {
+    top: 30%;
+    right: 15px;
+    transform: rotate(-35deg);
+    background: #f4f593;
+    opacity: 0.25;
+    width: 50px;
+    height: 50px;
   }
   
   .topics-header {
@@ -128,7 +200,6 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
   .icon-wrapper {
     width: 40px;
     height: 40px;
-    background: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -145,9 +216,10 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 0.3rem 1rem;
     min-height: 36px;
+    position: relative;
   }
   
   .topic-icon {
@@ -157,7 +229,6 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
   }
   
   .topic-text-box {
-    background: rgba(255, 255, 255, 0.85);
     border: 1px solid rgba(169, 229, 207, 0.3);
     border-radius: 30px;
     padding: 0.3rem 1rem;
@@ -175,6 +246,10 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
     color: #333;
     line-height: 1.2;
     font-weight: 600;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
   }
   
   @media (max-width: 480px) {

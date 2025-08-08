@@ -1,8 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import EventInfo from '../components/EventInfo.astro';
-import Highlights from '../components/Highlights.astro';
+import HeaderWithHighlights from '../components/HeaderWithHighlights.astro';
 import Topics from '../components/Topics.astro';
 import SpeakerPoster from '../components/SpeakerPoster.astro';
 import Footer from '../components/Footer.astro';
@@ -12,10 +10,9 @@ const speakers = getSpeakers();
 ---
 
 <Layout title="GOSIM Embodied AI - Speaker Posters">
-  <Header />
-  <EventInfo />
-  <Highlights />
-  <Topics />
+  <div class="page-wrapper">
+    <HeaderWithHighlights />
+    <Topics />
   <main class="container">
     <div class="speakers-title-section">
       <h1 class="title-chinese">具身智能</h1>
@@ -34,16 +31,60 @@ const speakers = getSpeakers();
     </div>
   </main>
   <Footer />
+  </div>
 </Layout>
 
 <style>
-  .speakers-title-section {
+  .page-wrapper {
+    max-width: 480px;
+    margin: 0 auto;
     background: linear-gradient(135deg, #f5bcd8 0%, #a9e5cf 100%);
+  }
+
+  .speakers-title-section {
+    background: transparent;
     padding: 2rem 1rem;
     text-align: center;
     width: 100%;
     max-width: 480px;
     margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .speakers-title-section::before,
+  .speakers-title-section::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: #f4f593;
+    opacity: 0.2;
+    clip-path: polygon(
+      50% 0%,
+      60% 40%,
+      100% 50%,
+      60% 60%,
+      50% 100%,
+      40% 60%,
+      0% 50%,
+      40% 40%
+    );
+    pointer-events: none;
+  }
+  
+  .speakers-title-section::before {
+    top: 15px;
+    left: 30px;
+    transform: rotate(30deg);
+  }
+  
+  .speakers-title-section::after {
+    bottom: 20px;
+    right: 25px;
+    transform: rotate(-45deg);
+    background: #adffce;
+    opacity: 0.15;
   }
 
   .title-chinese {

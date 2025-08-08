@@ -1,0 +1,391 @@
+---
+import { Image } from 'astro:assets';
+import gosimLogo from '../assets/images/icons/gosim-logo.svg';
+import headerBg from '../assets/images/header/hangzhou-temple_2.jpg';
+
+const highlights = [
+  // Row 1 - long, short
+  {
+    number: "2",
+    chinese: "同场会议",
+    english: "Concurrent Sessions",
+    row: 1,
+    size: "long",
+    color: "#f4f593"
+  },
+  {
+    number: "5",
+    chinese: "主题论坛",
+    english: "Themed Forums",
+    row: 1,
+    size: "short",
+    color: "#fffddf"
+  },
+  // Row 2 - short, long
+  {
+    number: "4",
+    chinese: "趣味黑客松",
+    english: "AI App Hackathons",
+    row: 2,
+    size: "short",
+    color: "#ffffff"
+  },
+  {
+    number: "100+",
+    chinese: "全球资深专家",
+    english: "Global Senior Experts",
+    row: 2,
+    size: "long",
+    color: "#adffce"
+  },
+  // Row 3 - equal
+  {
+    number: "100+",
+    chinese: "优质内容分享",
+    english: "Quality Content Shares",
+    row: 3,
+    size: "equal",
+    color: "#93ecff"
+  },
+  {
+    number: "9",
+    chinese: "工作坊",
+    english: "Workshops",
+    row: 3,
+    size: "equal",
+    color: "#ffccb7"
+  }
+];
+---
+
+<div class="header-highlights-container">
+  <header class="page-header" style={`--header-bg: url('${headerBg.src}')`}>
+    <div class="header-content">
+      <div class="title-container">
+        <h1 class="title-line">GOSIM</h1>
+        <h1 class="title-line yellow">HANGZHOU 2025</h1>
+      </div>
+      <img src={gosimLogo.src} alt="GOSIM Logo" class="logo" />
+    </div>
+    <div class="event-info-section">
+      <div class="info-item">
+        <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+          <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+        <span class="location">杭州白金汉爵大酒店</span>
+      </div>
+      <div class="info-item">
+        <svg class="info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        <span class="date">2025年9月13-14日</span>
+      </div>
+    </div>
+  </header>
+  
+  <div class="highlights-section">
+    <div class="highlights-grid">
+      {/* Row 1 */}
+      <div class="highlight-row row-1">
+        {highlights.slice(0, 2).map((item) => (
+          <div class={`highlight-box ${item.size}`} style={`background: ${item.color}; --box-color: ${item.color};`}>
+            <div class="number" set:html={item.number.replace('+', '<sup class="plus">+</sup>')}></div>
+            <div class="text-content">
+              <div class="chinese">{item.chinese}</div>
+              <div class="english">{item.english}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      {/* Row 2 */}
+      <div class="highlight-row row-2">
+        {highlights.slice(2, 4).map((item) => (
+          <div class={`highlight-box ${item.size}`} style={`background: ${item.color}; --box-color: ${item.color};`}>
+            <div class="number" set:html={item.number.replace('+', '<sup class="plus">+</sup>')}></div>
+            <div class="text-content">
+              <div class="chinese">{item.chinese}</div>
+              <div class="english">{item.english}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      {/* Row 3 */}
+      <div class="highlight-row row-3">
+        {highlights.slice(4, 6).map((item) => (
+          <div class={`highlight-box ${item.size}`} style={`background: ${item.color}; --box-color: ${item.color};`}>
+            <div class="number" set:html={item.number.replace('+', '<sup class="plus">+</sup>')}></div>
+            <div class="text-content">
+              <div class="chinese">{item.chinese}</div>
+              <div class="english">{item.english}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+  
+  .header-highlights-container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    background: transparent;
+  }
+  
+  .page-header {
+    width: 100%;
+    background: 
+      linear-gradient(to right, rgba(245, 188, 216, 1) 0%, rgba(245, 188, 216, 0.98) 20%, rgba(245, 188, 216, 0.95) 40%, rgba(169, 229, 207, 0.6) 60%, rgba(169, 229, 207, 0.3) 100%),
+      var(--header-bg);
+    background-size: cover;
+    background-position: 80% bottom;
+    padding: 1.5rem;
+    margin-bottom: 0;
+    border-radius: 0;
+    position: relative;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    position: relative;
+  }
+  
+  .title-container {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.9;
+    text-align: left;
+  }
+  
+  .logo {
+    height: 18px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    transform: none;
+  }
+  
+  .title-line {
+    font-family: 'Bebas Neue', sans-serif;
+    color: white;
+    font-size: 3rem;
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: 2px;
+    padding-left: 0;
+    text-transform: uppercase;
+  }
+  
+  .title-line.yellow {
+    color: #f9e9cd;
+  }
+  
+  .event-info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem 0 0 0;
+  }
+  
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .info-icon {
+    width: 16px;
+    height: 16px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  
+  .location {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  
+  .date {
+    font-size: 1rem;
+    color: #fff;
+  }
+  
+  /* Highlights section */
+  .highlights-section {
+    padding: 1.5rem;
+    padding-bottom: 2.5rem;
+    background: transparent;
+  }
+  
+  .highlights-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .highlight-row {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  /* Row 1: 2:1 ratio */
+  .row-1 .highlight-box.long {
+    flex: 2;
+  }
+  .row-1 .highlight-box.short {
+    flex: 1;
+  }
+  
+  /* Row 2: 1:2 ratio */
+  .row-2 .highlight-box.short {
+    flex: 1;
+  }
+  .row-2 .highlight-box.long {
+    flex: 2;
+  }
+  
+  /* Row 3: 1:1 ratio (equal) */
+  .row-3 .highlight-box {
+    flex: 1;
+  }
+  
+  .highlight-box {
+    border-radius: 100px;
+    padding: 0.95rem 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    position: relative;
+    border: 2px solid rgba(245, 188, 216, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-height: 94px;
+  }
+  
+  .highlight-box::before {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 20%;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid var(--box-color);
+    z-index: 2;
+  }
+  
+  .highlight-box::after {
+    content: '';
+    position: absolute;
+    bottom: -17px;
+    left: calc(20% - 2px);
+    width: 0;
+    height: 0;
+    border-left: 17px solid transparent;
+    border-right: 17px solid transparent;
+    border-top: 17px solid rgba(245, 188, 216, 0.3);
+    z-index: 1;
+  }
+  
+  .row-1 .highlight-box.long::before,
+  .row-1 .highlight-box.long::after {
+    left: 30%;
+  }
+  
+  .row-2 .highlight-box.long::before,
+  .row-2 .highlight-box.long::after {
+    left: 70%;
+  }
+  
+  .row-3 .highlight-box:nth-child(2)::before,
+  .row-3 .highlight-box:nth-child(2)::after {
+    left: 50%;
+  }
+  
+  .number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #000;
+    font-family: 'Bebas Neue', sans-serif;
+    line-height: 1;
+    min-width: 35px;
+    text-align: center;
+  }
+  
+  .number :global(.plus) {
+    font-size: 1.2rem;
+    vertical-align: super;
+    margin-left: -0.1rem;
+    color: #000;
+  }
+  
+  .text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  
+  .chinese {
+    font-size: 0.65rem;
+    color: #333;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  
+  .english {
+    font-size: 0.6rem;
+    color: #666;
+    line-height: 1.2;
+  }
+  
+  @media (max-width: 480px) {    
+    .logo {
+      height: 15px;
+      right: 0.3rem;
+      top: 0.3rem;
+    }
+    
+    .title-line {
+      font-size: 2.5rem;
+      padding-left: 0;
+    }
+    
+    .highlights-section {
+      padding: 1rem;
+    }
+    
+    .highlight-box {
+      padding: 0.75rem;
+      min-height: 50px;
+    }
+    
+    .number {
+      font-size: 2rem;
+      min-width: 50px;
+    }
+    
+    .chinese {
+      font-size: 0.8rem;
+    }
+    
+    .english {
+      font-size: 0.7rem;
+    }
+  }
+</style>
