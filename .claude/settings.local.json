@@ -17,7 +17,11 @@
       "Bash(git pull:*)",
       "Bash(del nul)",
       "Bash(rm:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(cat:*)",
+      "Bash(taskkill:*)",
+      "Bash(node:*)",
+      "Bash(npm uninstall:*)"
     ],
     "deny": []
   }

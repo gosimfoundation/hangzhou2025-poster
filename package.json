@@ -11,8 +11,8 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.2.1",
     "astro": "^5.5.2",
-    "html2pdf.js": "^0.10.3",
     "papaparse": "^5.4.1",
+    "puppeteer": "^24.16.0",
     "sass": "^1.85.1"
   }
 }

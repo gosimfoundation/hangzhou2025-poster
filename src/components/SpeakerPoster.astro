@@ -28,7 +28,7 @@ if (photoFileName) {
 }
 ---
 
-<div class={`speaker-poster ${number % 2 === 0 ? 'photo-right' : 'photo-left'}`}>
+<div class={`speaker-poster ${number % 2 === 0 ? 'photo-right' : 'photo-left'} ${number % 2 === 0 ? 'bg-pink' : 'bg-white'}`}>
   <div class="speaker-header">
     {speakerImage && (
       <div class="speaker-photo">
@@ -62,6 +62,16 @@ if (photoFileName) {
     margin: 0;
     width: 100%;
     padding: 0.75rem;
+    border-radius: 15px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .speaker-poster.bg-white {
+    background-color: rgb(255, 255, 255);
+  }
+  
+  .speaker-poster.bg-pink {
+    background-color: rgb(255, 230, 240);
   }
   
   .speaker-header {

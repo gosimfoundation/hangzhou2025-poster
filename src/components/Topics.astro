@@ -50,7 +50,7 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
     {topicsRow1.map((topic) => (
       <div class="topic-item">
         <div class="topic-text-box horizontal" style={`background: ${topic.color}80;`}>
-          <div class="icon-wrapper inline" style={`background: ${topic.color};`}>
+          <div class="icon-wrapper inline">
             <img src={topic.icon} alt={topic.name} class="topic-icon" />
           </div>
           <span class="topic-name">{topic.name}</span>
@@ -61,7 +61,7 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
     <!-- Row 2 - Full width -->
     <div class="topic-item full-row">
       <div class="topic-text-box horizontal" style={`background: ${topicRow2.color}80;`}>
-        <div class="icon-wrapper inline" style={`background: ${topicRow2.color};`}>
+        <div class="icon-wrapper inline">
           <img src={topicRow2.icon} alt={topicRow2.name} class="topic-icon" />
         </div>
         <span class="topic-name">{topicRow2.name}</span>
@@ -72,7 +72,7 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
     {topicsRow3.map((topic) => (
       <div class="topic-item">
         <div class="topic-text-box horizontal" style={`background: ${topic.color}80;`}>
-          <div class="icon-wrapper inline" style={`background: ${topic.color};`}>
+          <div class="icon-wrapper inline">
             <img src={topic.icon} alt={topic.name} class="topic-icon" />
           </div>
           <span class="topic-name">{topic.name}</span>
@@ -198,13 +198,12 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
   }
   
   .icon-wrapper {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: transparent;
   }
   
   .icon-wrapper.inline {
@@ -217,24 +216,24 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    padding: 0.3rem 1rem;
-    min-height: 36px;
+    padding: 1.2rem 1.5rem;
+    min-height: 65px;
     position: relative;
   }
   
   .topic-icon {
-    width: 22px;
-    height: 22px;
+    width: 16px;
+    height: 16px;
     filter: invert(45%) sepia(61%) saturate(500%) hue-rotate(310deg) brightness(95%) contrast(90%);
   }
   
   .topic-text-box {
     border: 1px solid rgba(169, 229, 207, 0.3);
     border-radius: 30px;
-    padding: 0.3rem 1rem;
+    padding: 1.2rem 1.5rem;
     width: 100%;
     text-align: center;
-    min-height: 36px;
+    min-height: 65px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -242,7 +241,7 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
   }
   
   .topic-name {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     color: #333;
     line-height: 1.2;
     font-weight: 600;

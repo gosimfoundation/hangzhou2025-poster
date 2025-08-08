@@ -1,0 +1,167 @@
+---
+import { Image } from 'astro:assets';
+import { getSpeakerPhoto } from '../data/speakerPhotos.js';
+import { getSpeakerRole } from '../data/speakerRoles.js';
+
+export interface Props {
+  number: number;
+  name: string;
+  title: string;
+  abstract: string;
+}
+
+const { number, name, title, abstract } = Astro.props;
+const photoFileName = getSpeakerPhoto(name);
+const role = getSpeakerRole(name);
+
+let speakerImage = null;
+if (photoFileName) {
+  try {
+    const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/embodied-ai/*.{jpg,jpeg,png,webp}');
+    const imagePath = `/src/assets/images/embodied-ai/${photoFileName}`;
+    if (images[imagePath]) {
+      speakerImage = await images[imagePath]();
+    }
+  } catch (e) {
+    console.log(`Could not load image for ${name}`);
+  }
+}
+---
+
+<div class={`speaker-poster ${number % 2 === 0 ? 'photo-right' : 'photo-left'}`}>
+  <div class="speaker-header">
+    {speakerImage && (
+      <div class="speaker-photo ghibli-style">
+        <Image 
+          src={speakerImage.default} 
+          alt={name}
+          width={160}
+          height={160}
+          format="webp"
+          quality={90}
+        />
+      </div>
+    )}
+    {!speakerImage && (
+      <div class="speaker-photo-placeholder">
+        <div class="initials">
+          {name.split(' ').map(n => n[0]).join('').toUpperCase()}
+        </div>
+      </div>
+    )}
+    <div class="speaker-info">
+      <h2>{name}</h2>
+      <div class="speaker-role">{role.length > 35 ? role.substring(0, 35) + '...' : role}</div>
+      <div class="talk-title">{title}</div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .speaker-poster {
+    margin: 0;
+    width: 100%;
+    padding: 0.75rem;
+  }
+  
+  .speaker-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .speaker-poster.photo-right .speaker-header {
+    flex-direction: row-reverse;
+  }
+  
+  .speaker-photo {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  /* Ghibli-style filter effects */
+  .speaker-photo.ghibli-style {
+    border: 3px solid #ffeaa7;
+    box-shadow: 0 4px 12px rgba(255, 182, 193, 0.4);
+  }
+  
+  .speaker-photo.ghibli-style :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    /* Apply artistic filters for a softer, illustrated look */
+    filter: 
+      contrast(0.9)
+      saturate(1.3)
+      brightness(1.1)
+      sepia(0.15);
+    /* Smooth edges */
+    image-rendering: smooth;
+  }
+  
+  /* Add a soft overlay for more artistic effect */
+  .speaker-photo.ghibli-style::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 234, 167, 0.1) 0%,
+      rgba(255, 182, 193, 0.1) 50%,
+      rgba(169, 229, 207, 0.1) 100%
+    );
+    pointer-events: none;
+    border-radius: 17px;
+  }
+  
+  .speaker-photo-placeholder {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #ffeaa7 0%, #ffb6c1 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 12px rgba(255, 182, 193, 0.4);
+  }
+  
+  .initials {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .speaker-role {
+    font-size: 0.8rem;
+    color: #666;
+    opacity: 0.9;
+    margin-top: 0.2rem;
+    margin-bottom: 0.3rem;
+    line-height: 1.2;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #ffeaa7;
+  }
+  
+  .speaker-header .talk-title {
+    font-size: 0.95rem;
+    color: #333;
+    opacity: 0.9;
+    margin-top: 0.5rem;
+    line-height: 1.3;
+    font-weight: bold;
+  }
+</style>
