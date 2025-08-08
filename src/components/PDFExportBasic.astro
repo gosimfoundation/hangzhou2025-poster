@@ -1,0 +1,164 @@
+---
+// Basic PDF export using standard A4 pages
+---
+
+<div class="pdf-button-wrapper">
+  <button id="pdf-export-basic" class="pdf-export-button">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+      <polyline points="14 2 14 8 20 8"></polyline>
+    </svg>
+    导出PDF
+  </button>
+</div>
+
+<style>
+  .pdf-button-wrapper {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 99999;
+  }
+
+  .pdf-export-button {
+    background: #f4f593;
+    color: #333;
+    border: 2px solid #333;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+
+  .pdf-export-button:hover {
+    background: #e8e980;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .pdf-export-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  @media print {
+    .pdf-button-wrapper {
+      display: none !important;
+    }
+  }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+  window.addEventListener('load', function() {
+    // Wait a bit for everything to fully load
+    setTimeout(function() {
+      const btn = document.getElementById('pdf-export-basic');
+      
+      if (!btn) {
+        console.error('Button not found');
+        return;
+      }
+      
+      console.log('PDF button initialized');
+      
+      btn.addEventListener('click', function() {
+        console.log('Starting PDF export...');
+        btn.disabled = true;
+        btn.textContent = '生成中...';
+        
+        // Find the content
+        const content = document.querySelector('.page-wrapper');
+        
+        if (!content) {
+          console.error('Page wrapper not found');
+          alert('页面内容未找到');
+          btn.disabled = false;
+          btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg> 导出PDF';
+          return;
+        }
+        
+        console.log('Content found, preparing PDF...');
+        
+        // Hide the button temporarily
+        const btnWrapper = document.querySelector('.pdf-button-wrapper');
+        const originalDisplay = btnWrapper ? btnWrapper.style.display : '';
+        if (btnWrapper) {
+          btnWrapper.style.display = 'none';
+        }
+        
+        // Get the full height of the content - scale down for PDF
+        const contentHeight = content.scrollHeight;
+        const contentWidth = 480; // Fixed width for mobile layout
+        
+        // Scale down to points for PDF (1px = 0.75pt)
+        const pdfWidth = contentWidth * 0.75;
+        const pdfHeight = contentHeight * 0.75;
+        
+        console.log('Content dimensions:', contentWidth, 'x', contentHeight);
+        console.log('PDF dimensions:', pdfWidth, 'x', pdfHeight);
+        
+        // Options for single long page
+        const opt = {
+          margin:       0,
+          filename:     'GOSIM-Poster.pdf',
+          image:        { 
+            type: 'jpeg', 
+            quality: 0.95 
+          },
+          html2canvas:  { 
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            scrollY: 0,
+            width: contentWidth,
+            height: contentHeight
+          },
+          jsPDF:        { 
+            unit: 'pt', 
+            format: [pdfWidth, pdfHeight], 
+            orientation: 'portrait',
+            compress: true
+          },
+          pagebreak:    { 
+            mode: 'avoid-all'
+          }
+        };
+        
+        console.log('Generating PDF...');
+        
+        // Generate the PDF
+        html2pdf()
+          .set(opt)
+          .from(content)
+          .save()
+          .then(function() {
+            console.log('PDF saved successfully');
+            // Restore button
+            if (btnWrapper) {
+              btnWrapper.style.display = originalDisplay;
+            }
+            btn.disabled = false;
+            btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg> 导出PDF';
+          })
+          .catch(function(error) {
+            console.error('PDF generation failed:', error);
+            // Restore button
+            if (btnWrapper) {
+              btnWrapper.style.display = originalDisplay;
+            }
+            btn.disabled = false;
+            btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg> 导出PDF';
+            alert('PDF导出失败，请重试');
+          });
+      });
+    }, 500);
+  });
+</script>

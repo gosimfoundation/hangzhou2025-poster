@@ -1,0 +1,210 @@
+---
+// Simple PDF Exporter component that captures only visible viewport
+---
+
+<button id="export-pdf-viewport" class="pdf-export-btn" title="导出当前视图为PDF">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+    <polyline points="14 2 14 8 20 8"></polyline>
+    <line x1="12" y1="15" x2="12" y2="11"></line>
+    <line x1="12" y1="19" x2="12" y2="19"></line>
+  </svg>
+  <span class="btn-text">导出PDF</span>
+</button>
+
+<style>
+  .pdf-export-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, #f4f593 0%, #fffddf 100%);
+    color: #333;
+    border: 2px solid rgba(244, 245, 147, 0.3);
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+
+  .pdf-export-btn:hover {
+    background: linear-gradient(135deg, #e8e980 0%, #f5f3c5 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .pdf-export-btn:active {
+    transform: translateY(0);
+  }
+
+  .pdf-export-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .pdf-export-btn svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .pdf-export-btn .btn-text {
+    white-space: nowrap;
+  }
+
+  /* Loading animation */
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .pdf-export-btn.loading svg {
+    animation: spin 1s linear infinite;
+  }
+
+  @media (max-width: 480px) {
+    .pdf-export-btn {
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 16px;
+      font-size: 0.85rem;
+    }
+  }
+
+  @media print {
+    .pdf-export-btn {
+      display: none !important;
+    }
+  }
+</style>
+
+<!-- Load html2pdf.js from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const exportBtn = document.getElementById('export-pdf-viewport');
+    
+    if (!exportBtn) return;
+
+    exportBtn.addEventListener('click', function() {
+      // Show loading state
+      exportBtn.classList.add('loading');
+      exportBtn.disabled = true;
+      const btnText = exportBtn.querySelector('.btn-text');
+      const originalText = btnText.textContent;
+      btnText.textContent = '生成中...';
+
+      // Method 1: Export only the current viewport (what's visible on screen)
+      exportVisibleViewport();
+
+      function exportVisibleViewport() {
+        // Get viewport dimensions
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
+        // Create a temporary container
+        const tempDiv = document.createElement('div');
+        tempDiv.style.position = 'fixed';
+        tempDiv.style.top = '0';
+        tempDiv.style.left = '0';
+        tempDiv.style.width = viewportWidth + 'px';
+        tempDiv.style.height = viewportHeight + 'px';
+        tempDiv.style.overflow = 'hidden';
+        tempDiv.style.zIndex = '-9999';
+        tempDiv.style.background = 'white';
+
+        // Clone the visible content
+        const pageContent = document.querySelector('.page-wrapper').cloneNode(true);
+        
+        // Adjust position to show only visible part
+        pageContent.style.position = 'relative';
+        pageContent.style.top = -scrollTop + 'px';
+        pageContent.style.left = -scrollLeft + 'px';
+        
+        // Remove the PDF button from the clone
+        const clonedBtn = pageContent.querySelector('.pdf-export-btn');
+        if (clonedBtn) clonedBtn.remove();
+
+        tempDiv.appendChild(pageContent);
+        document.body.appendChild(tempDiv);
+
+        // Configure PDF options
+        const opt = {
+          margin:       0,
+          filename:     `GOSIM-具身智能-${getCurrentDate()}.pdf`,
+          image:        { 
+            type: 'jpeg', 
+            quality: 0.98 
+          },
+          html2canvas:  { 
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            width: viewportWidth,
+            height: viewportHeight,
+            windowWidth: viewportWidth,
+            windowHeight: viewportHeight
+          },
+          jsPDF:        { 
+            unit: 'pt', 
+            format: [viewportWidth * 0.75, viewportHeight * 0.75],
+            orientation: viewportWidth > viewportHeight ? 'landscape' : 'portrait'
+          }
+        };
+
+        // Generate and save PDF
+        html2pdf().set(opt).from(tempDiv).save().then(() => {
+          // Clean up
+          document.body.removeChild(tempDiv);
+          
+          // Restore button state
+          exportBtn.classList.remove('loading');
+          exportBtn.disabled = false;
+          btnText.textContent = originalText;
+        }).catch(error => {
+          console.error('PDF export failed:', error);
+          alert('PDF导出失败，请重试');
+          
+          // Clean up
+          if (tempDiv.parentNode) {
+            document.body.removeChild(tempDiv);
+          }
+          
+          // Restore button state
+          exportBtn.classList.remove('loading');
+          exportBtn.disabled = false;
+          btnText.textContent = originalText;
+        });
+      }
+
+      function getCurrentDate() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        return `${year}${month}${day}`;
+      }
+    });
+
+    // Alternative method: Export using keyboard shortcut (Ctrl/Cmd + E)
+    document.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+        e.preventDefault();
+        const exportBtn = document.getElementById('export-pdf-viewport');
+        if (exportBtn && !exportBtn.disabled) {
+          exportBtn.click();
+        }
+      }
+    });
+  });
+</script>

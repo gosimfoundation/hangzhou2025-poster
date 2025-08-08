@@ -1,0 +1,125 @@
+---
+// Simple PDF Export Button
+---
+
+<button id="pdf-export-btn" class="pdf-button">
+  导出PDF
+</button>
+
+<style>
+  .pdf-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #f4f593;
+    color: #333;
+    border: 2px solid #e8e980;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    transition: all 0.3s ease;
+  }
+
+  .pdf-button:hover {
+    background: #e8e980;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .pdf-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  @media print {
+    .pdf-button {
+      display: none !important;
+    }
+  }
+</style>
+
+<!-- Load html2pdf.js from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+<script>
+  window.addEventListener('load', function() {
+    const btn = document.getElementById('pdf-export-btn');
+    if (!btn) {
+      console.error('PDF button not found');
+      return;
+    }
+    
+    console.log('PDF button initialized');
+    
+    btn.addEventListener('click', function() {
+      console.log('Export PDF clicked');
+      btn.disabled = true;
+      btn.textContent = '生成中...';
+      
+      // Get current viewport
+      const viewportHeight = window.innerHeight;
+      const scrollY = window.scrollY;
+      
+      // Create element to capture
+      const element = document.querySelector('.page-wrapper');
+      if (!element) {
+        console.error('Page wrapper not found');
+        btn.disabled = false;
+        btn.textContent = '导出PDF';
+        return;
+      }
+      
+      // Clone and prepare content
+      const clone = element.cloneNode(true);
+      clone.style.position = 'relative';
+      clone.style.top = -scrollY + 'px';
+      
+      // Create temporary container
+      const container = document.createElement('div');
+      container.style.position = 'fixed';
+      container.style.top = '0';
+      container.style.left = '0';
+      container.style.width = window.innerWidth + 'px';
+      container.style.height = viewportHeight + 'px';
+      container.style.overflow = 'hidden';
+      container.style.zIndex = '-1000';
+      container.style.background = 'white';
+      container.appendChild(clone);
+      document.body.appendChild(container);
+      
+      // PDF options
+      const opt = {
+        margin: 0,
+        filename: 'GOSIM-Export.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+          scale: 2,
+          useCORS: true,
+          width: window.innerWidth,
+          height: viewportHeight
+        },
+        jsPDF: { 
+          unit: 'pt', 
+          format: [window.innerWidth * 0.75, viewportHeight * 0.75],
+          orientation: 'portrait' 
+        }
+      };
+      
+      // Generate PDF
+      html2pdf().set(opt).from(container).save().then(function() {
+        document.body.removeChild(container);
+        btn.disabled = false;
+        btn.textContent = '导出PDF';
+      }).catch(function(error) {
+        console.error('PDF generation failed:', error);
+        document.body.removeChild(container);
+        btn.disabled = false;
+        btn.textContent = '导出PDF';
+        alert('PDF导出失败');
+      });
+    });
+  });
+</script>

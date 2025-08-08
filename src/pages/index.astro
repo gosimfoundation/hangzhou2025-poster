@@ -4,6 +4,7 @@ import HeaderWithHighlights from '../components/HeaderWithHighlights.astro';
 import Topics from '../components/Topics.astro';
 import SpeakerPoster from '../components/SpeakerPoster.astro';
 import Footer from '../components/Footer.astro';
+import PDFButton from '../components/PDFExportBasic.astro';
 import { getSpeakers } from '../data/parseSpeakers.js';
 
 const speakers = getSpeakers();
@@ -32,6 +33,7 @@ const speakers = getSpeakers();
   </main>
   <Footer />
   </div>
+  <PDFButton />
 </Layout>
 
 <style>
