@@ -1,0 +1,169 @@
+---
+const topicsRow1 = [
+  {
+    name: "具身智能",
+    icon: "/icons/aimodels.svg"
+  },
+  {
+    name: "未来AI",
+    icon: "/icons/startups.svg"
+  }
+];
+
+const topicRow2 = {
+  name: "模型和基础设施",
+  icon: "/icons/foundation.svg"
+};
+
+const topicsRow3 = [
+  {
+    name: "智能体应用",
+    icon: "/icons/collaboration.svg"
+  },
+  {
+    name: "智能互联网",
+    icon: "/icons/networking.svg"
+  }
+];
+
+const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
+---
+
+<div class="poster-topics">
+  <div class="topics-header">
+    <h1>5大主题论坛</h1>
+    <h3>5 Parallel Tracks</h3>
+  </div>
+  <div class="topics-grid">
+    <!-- Row 1 -->
+    {topicsRow1.map((topic) => (
+      <div class="topic-item">
+        <div class="topic-text-box horizontal">
+          <div class="icon-wrapper inline">
+            <img src={topic.icon} alt={topic.name} class="topic-icon" />
+          </div>
+          <span class="topic-name">{topic.name}</span>
+        </div>
+      </div>
+    ))}
+    
+    <!-- Row 2 - Full width -->
+    <div class="topic-item full-row">
+      <div class="topic-text-box horizontal">
+        <div class="icon-wrapper inline">
+          <img src={topicRow2.icon} alt={topicRow2.name} class="topic-icon" />
+        </div>
+        <span class="topic-name">{topicRow2.name}</span>
+      </div>
+    </div>
+    
+    <!-- Row 3 -->
+    {topicsRow3.map((topic) => (
+      <div class="topic-item">
+        <div class="topic-text-box horizontal">
+          <div class="icon-wrapper inline">
+            <img src={topic.icon} alt={topic.name} class="topic-icon" />
+          </div>
+          <span class="topic-name">{topic.name}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .poster-topics {
+    background: linear-gradient(135deg, #f5bcd8 0%, #a9e5cf 100%);
+    padding: 2cm;
+    margin-bottom: 0;
+    border-radius: 0;
+  }
+  
+  .topics-header {
+    text-align: center;
+    margin-bottom: 2cm;
+  }
+  
+  .topics-header h1 {
+    font-size: 2.5cm;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 0.5cm 0;
+  }
+  
+  .topics-header h3 {
+    font-size: 1.5cm;
+    font-weight: 400;
+    color: #666;
+    margin: 0;
+  }
+  
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
+    gap: 2cm;
+  }
+  
+  .topic-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .topic-item.full-row {
+    grid-column: 1 / -1;
+  }
+  
+  .icon-wrapper.inline {
+    margin-bottom: 0;
+    margin-right: 1cm;
+  }
+  
+  .topic-text-box.horizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6cm 2cm;
+  }
+  
+  .icon-wrapper {
+    width: 3cm;
+    height: 3cm;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0.2cm 0.8cm rgba(0, 0, 0, 0.1);
+  }
+  
+  .topic-icon {
+    width: 1.8cm;
+    height: 1.8cm;
+    filter: invert(45%) sepia(61%) saturate(500%) hue-rotate(310deg) brightness(95%) contrast(90%);
+  }
+  
+  .topic-text-box {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(169, 229, 207, 0.3);
+    border-radius: 3cm;
+    padding: 0.6cm 2cm;
+    width: 100%;
+    text-align: center;
+    min-height: 2.5cm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0.2cm 0.4cm rgba(0, 0, 0, 0.05);
+  }
+  
+  .topic-name {
+    font-size: 1.3cm;
+    color: #333;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,17 @@
+{
+  "name": "gosim-poster",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev --host",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^5.5.2",
+    "sass": "^1.85.1",
+    "papaparse": "^5.4.1"
+  }
+}

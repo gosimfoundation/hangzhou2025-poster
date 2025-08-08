@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import EventInfo from '../components/EventInfo.astro';
+import Highlights from '../components/Highlights.astro';
+import Topics from '../components/Topics.astro';
+import SpeakerPoster from '../components/SpeakerPoster.astro';
+import Footer from '../components/Footer.astro';
+import { getSpeakers } from '../data/parseSpeakers.js';
+
+const speakers = getSpeakers();
+---
+
+<Layout title="GOSIM Embodied AI - Speaker Posters">
+  <Header />
+  <EventInfo />
+  <Highlights />
+  <Topics />
+  <main class="container">
+    <div class="speakers-title-section">
+      <h1 class="title-chinese">具身智能</h1>
+      <h3 class="title-english">Embodied AI</h3>
+      <h2 class="title-guests">— 特邀嘉宾 —</h2>
+    </div>
+    <div class="speakers-container">
+      {speakers.map((speaker, index) => (
+        <SpeakerPoster
+          number={index + 1}
+          name={speaker.name}
+          title={speaker.title}
+          abstract={speaker.abstract}
+        />
+      ))}
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .speakers-title-section {
+    background: linear-gradient(135deg, #f5bcd8 0%, #a9e5cf 100%);
+    padding: 2rem 1rem;
+    text-align: center;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .title-chinese {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0 0 0.5rem 0;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+
+  .title-english {
+    font-size: 1.2rem;
+    color: #666;
+    margin: 0 0 1rem 0;
+    font-weight: normal;
+  }
+
+  .title-guests {
+    font-size: 1.8rem;
+    color: #333;
+    margin: 0;
+    font-family: 'Noto Sans SC', sans-serif;
+  }
+</style>

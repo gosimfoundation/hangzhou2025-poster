@@ -1,0 +1,172 @@
+---
+const highlights = [
+  // Row 1 - long, short
+  {
+    number: "2",
+    chinese: "同场会议",
+    english: "Concurrent Sessions",
+    row: 1,
+    size: "long"
+  },
+  {
+    number: "5",
+    chinese: "主题论坛",
+    english: "Themed Forums",
+    row: 1,
+    size: "short"
+  },
+  // Row 2 - short, long
+  {
+    number: "4",
+    chinese: "AI应用黑客松",
+    english: "AI App Hackathons",
+    row: 2,
+    size: "short"
+  },
+  {
+    number: "100+",
+    chinese: "全球资深专家",
+    english: "Global Senior Experts",
+    row: 2,
+    size: "long"
+  },
+  // Row 3 - equal
+  {
+    number: "100+",
+    chinese: "优质内容分享",
+    english: "Quality Content Shares",
+    row: 3,
+    size: "equal"
+  },
+  {
+    number: "9",
+    chinese: "工作坊",
+    english: "Workshops",
+    row: 3,
+    size: "equal"
+  }
+];
+---
+
+<div class="poster-highlights">
+  <div class="highlights-grid">
+    {/* Row 1 */}
+    <div class="highlight-row row-1">
+      {highlights.slice(0, 2).map((item) => (
+        <div class={`highlight-box ${item.size}`}>
+          <div class="number">{item.number}</div>
+          <div class="text-content">
+            <div class="chinese">{item.chinese}</div>
+            <div class="english">{item.english}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    {/* Row 2 */}
+    <div class="highlight-row row-2">
+      {highlights.slice(2, 4).map((item) => (
+        <div class={`highlight-box ${item.size}`}>
+          <div class="number">{item.number}</div>
+          <div class="text-content">
+            <div class="chinese">{item.chinese}</div>
+            <div class="english">{item.english}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+    
+    {/* Row 3 */}
+    <div class="highlight-row row-3">
+      {highlights.slice(4, 6).map((item) => (
+        <div class={`highlight-box ${item.size}`}>
+          <div class="number">{item.number}</div>
+          <div class="text-content">
+            <div class="chinese">{item.chinese}</div>
+            <div class="english">{item.english}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .poster-highlights {
+    background: linear-gradient(135deg, #f5bcd8 0%, #a9e5cf 100%);
+    padding: 2cm;
+    margin-bottom: 0;
+    border-radius: 0;
+  }
+  
+  .highlights-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8cm;
+  }
+  
+  .highlight-row {
+    display: flex;
+    gap: 0.8cm;
+  }
+  
+  /* Row 1: 2:1 ratio */
+  .row-1 .highlight-box.long {
+    flex: 2;
+  }
+  .row-1 .highlight-box.short {
+    flex: 1;
+  }
+  
+  /* Row 2: 1:2 ratio */
+  .row-2 .highlight-box.short {
+    flex: 1;
+  }
+  .row-2 .highlight-box.long {
+    flex: 2;
+  }
+  
+  /* Row 3: 1:1 ratio (equal) */
+  .row-3 .highlight-box {
+    flex: 1;
+  }
+  
+  .highlight-box {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 1cm;
+    padding: 1.5cm;
+    display: flex;
+    align-items: center;
+    gap: 1.5cm;
+    box-shadow: 0 0.2cm 0.4cm rgba(0, 0, 0, 0.05);
+  }
+  
+  .number {
+    font-size: 4cm;
+    font-weight: bold;
+    color: #f5bcd8;
+    font-family: 'Bebas Neue', sans-serif;
+    line-height: 1;
+    min-width: 5cm;
+    text-align: center;
+  }
+  
+  .text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3cm;
+  }
+  
+  .chinese {
+    font-size: 1.5cm;
+    color: #333;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  
+  .english {
+    font-size: 1.2cm;
+    color: #666;
+    line-height: 1.2;
+  }
+</style>

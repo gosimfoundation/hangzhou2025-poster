@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets';
+import gosimLogo from '../assets/images/icons/gosim-logo.svg';
+import headerBg from '../assets/images/header/hangzhou-temple_2.jpg';
+---
+
+<header class="page-header" style={`--header-bg: url('${headerBg.src}')`}>
+  <div class="header-content">
+    <div class="title-container">
+      <h1 class="title-line">GOSIM</h1>
+      <h1 class="title-line yellow">HANGZHOU 2025</h1>
+    </div>
+    <img src={gosimLogo.src} alt="GOSIM Logo" class="logo" />
+  </div>
+</header>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+  
+  .page-header {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    background: 
+      linear-gradient(to right, rgba(245, 188, 216, 1) 0%, rgba(245, 188, 216, 0.98) 20%, rgba(245, 188, 216, 0.95) 40%, rgba(169, 229, 207, 0.6) 60%, rgba(169, 229, 207, 0.3) 100%),
+      var(--header-bg);
+    background-size: cover;
+    background-position: 80% bottom;
+    padding: 1.5rem;
+    margin-bottom: 0;
+    border-radius: 0;
+    position: relative;
+  }
+  
+  .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    position: relative;
+  }
+  
+  .title-container {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.9;
+    text-align: left;
+  }
+  
+  .logo {
+    height: 18px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+    transform: none;
+  }
+  
+  .title-line {
+    font-family: 'Bebas Neue', sans-serif;
+    color: white;
+    font-size: 3rem;
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: 2px;
+    padding-left: 0;
+    text-transform: uppercase;
+  }
+  
+  .title-line.yellow {
+    color: #f9e9cd;
+  }
+  
+  @media (max-width: 480px) {    
+    .logo {
+      height: 15px;
+      right: 0.3rem;
+      top: 0.3rem;
+    }
+    
+    .title-line {
+      font-size: 2.5rem;
+      padding-left: 0;
+    }
+  }
+</style>

@@ -1,0 +1,53 @@
+---
+import PosterCard from '../components/PosterCard.astro';
+import PosterHeader from '../components/PosterHeader.astro';
+import PosterEventInfo from '../components/PosterEventInfo.astro';
+import PosterHighlights from '../components/PosterHighlights.astro';
+import PosterTopics from '../components/PosterTopics.astro';
+import PosterFooter from '../components/PosterFooter.astro';
+import { getSpeakers } from '../data/parseSpeakers.js';
+
+const speakers = getSpeakers();
+const speakerCount = speakers.length;
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GOSIM 具身智能 - 演讲者海报</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="poster-container">
+      <PosterHeader />
+      <PosterEventInfo />
+      <PosterHighlights />
+      <PosterTopics />
+      <div class="speakers-title-section">
+        <h1 class="title-chinese">具身智能</h1>
+        <h3 class="title-english">Embodied AI</h3>
+        <h2 class="title-guests">— 特邀嘉宾 —</h2>
+      </div>
+      <div class={`speakers-grid ${speakerCount === 11 ? 'eleven-speakers' : ''}`}>
+        {speakers.map((speaker, index) => (
+          <PosterCard
+            number={index + 1}
+            name={speaker.name}
+            title={speaker.title}
+            abstract={speaker.abstract}
+          />
+        ))}
+      </div>
+      <PosterFooter />
+    </div>
+  </body>
+</html>
+
+<style lang="scss">
+  @import "../styles/poster.scss";
+</style>

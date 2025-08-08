@@ -1,0 +1,61 @@
+---
+import gosimLogo from '../assets/images/icons/gosim-logo.svg';
+import headerBg from '../assets/images/header/hangzhou-temple_2.jpg';
+---
+
+<div class="poster-header" style={`--header-bg: url('${headerBg.src}')`}>
+  <div class="title-container">
+    <h1 class="title-line">GOSIM</h1>
+    <h1 class="title-line yellow">HANGZHOU 2025</h1>
+  </div>
+  <img src={gosimLogo.src} alt="GOSIM Logo" class="logo" />
+</div>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+  
+  .poster-header {
+    background: 
+      linear-gradient(to right, rgba(245, 188, 216, 1) 0%, rgba(245, 188, 216, 0.98) 20%, rgba(245, 188, 216, 0.95) 40%, rgba(169, 229, 207, 0.6) 60%, rgba(169, 229, 207, 0.3) 100%),
+      var(--header-bg);
+    background-size: cover;
+    background-position: 80% bottom;
+    padding: 2cm;
+    margin: -2cm -2cm 2cm -2cm;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+  }
+  
+  .title-container {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.9;
+    padding-left: 0;
+    text-align: left;
+  }
+  
+  .logo {
+    height: 1.5cm;
+    width: auto;
+    filter: brightness(0) invert(1);
+    position: absolute;
+    right: 1cm;
+    top: 1cm;
+  }
+  
+  .title-line {
+    font-family: 'Bebas Neue', sans-serif;
+    color: white;
+    font-size: 6cm;
+    font-weight: 400;
+    margin: 0;
+    letter-spacing: 0.4cm;
+    text-transform: uppercase;
+  }
+  
+  .title-line.yellow {
+    color: #f9e9cd;
+  }
+</style>

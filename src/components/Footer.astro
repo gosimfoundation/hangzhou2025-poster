@@ -1,0 +1,90 @@
+---
+import qrCode from '../assets/images/logos/gosim-wx.png';
+---
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="qr-section">
+      <img src={qrCode.src} alt="GOSIM WeChat QR Code" class="qr-code">
+    </div>
+    
+    <div class="organizers">
+      <div class="organizer-item">
+        <span class="label">主办单位：</span>
+        <span class="name">GOSIM</span>
+      </div>
+      <div class="organizer-item">
+        <span class="label">承办单位：</span>
+        <span class="name">CSDN</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #f5bcd8 0%, #a9e5cf 100%);
+    padding: 1.5rem;
+    border-radius: 0;
+    margin-top: 0;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .organizers {
+    display: flex;
+    gap: 1.5rem;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .organizer-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .label {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .name {
+    font-size: 1rem;
+    color: #333;
+    font-weight: 700;
+  }
+  
+  .qr-section {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .qr-code {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    background: white;
+    padding: 4px;
+  }
+  
+  @media (max-width: 480px) {
+    .footer {
+      padding: 1rem;
+    }
+    
+    .footer-content {
+      gap: 1rem;
+    }
+  }
+</style>
