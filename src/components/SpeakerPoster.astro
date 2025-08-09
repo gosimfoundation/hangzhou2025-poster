@@ -59,19 +59,82 @@ if (photoFileName) {
 
 <style>
   .speaker-poster {
-    margin: 0;
+    margin: 0 0 30px 0;
     width: 100%;
     padding: 0.75rem;
     border-radius: 15px;
     transition: background-color 0.3s ease;
+    position: relative;
+    overflow: visible;
   }
   
   .speaker-poster.bg-white {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255) !important;
+    opacity: 1 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --arrow-color: rgb(255, 255, 255);
+    --arrow-border: rgba(200, 200, 200, 0.3);
   }
   
   .speaker-poster.bg-pink {
-    background-color: rgb(255, 230, 240);
+    background-color: rgb(255, 230, 240) !important;
+    opacity: 1 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --arrow-color: rgb(255, 230, 240);
+    --arrow-border: rgba(255, 200, 220, 0.3);
+  }
+  
+  /* Callout arrow - border/outline */
+  .speaker-poster::before {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -15px !important;
+    width: 0 !important;
+    height: 0 !important;
+    border-left: 15px solid transparent !important;
+    border-right: 15px solid transparent !important;
+    border-top: 15px solid rgba(150, 150, 150, 0.3) !important;
+    z-index: 100 !important;
+    background: transparent !important;
+    clip-path: none !important;
+    opacity: 1 !important;
+  }
+  
+  /* Arrow inner fill matching box background */
+  .speaker-poster::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -13px !important;
+    width: 0 !important;
+    height: 0 !important;
+    border-left: 13px solid transparent !important;
+    border-right: 13px solid transparent !important;
+    border-top: 13px solid var(--arrow-color) !important;
+    z-index: 101 !important;
+    background: transparent !important;
+    clip-path: none !important;
+    opacity: 1 !important;
+  }
+  
+  /* Alternate arrow positions: odd rows left, even rows right */
+  .speaker-poster.photo-left::before {
+    left: 30% !important;
+    right: auto !important;
+  }
+  
+  .speaker-poster.photo-left::after {
+    left: calc(30% - 1px) !important;
+    right: auto !important;
+  }
+  
+  .speaker-poster.photo-right::before {
+    right: 30% !important;
+    left: auto !important;
+  }
+  
+  .speaker-poster.photo-right::after {
+    right: calc(30% - 1px) !important;
+    left: auto !important;
   }
   
   .speaker-header {

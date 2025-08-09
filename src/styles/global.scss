@@ -22,7 +22,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 1rem 3rem;
+  padding: 1rem 3rem 3rem 3rem;
   max-width: 480px;
   margin: 0 auto;
   background: transparent;
@@ -87,131 +87,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
   
-  &::before {
-    content: '';
-    position: absolute;
-    width: 28px;
-    height: 28px;
-    background: #fffddf;
-    opacity: 0.6;
-    clip-path: polygon(
-      50% 0%,
-      60% 40%,
-      100% 50%,
-      60% 60%,
-      50% 100%,
-      40% 60%,
-      0% 50%,
-      40% 40%
-    );
-    pointer-events: none;
-    top: 50%;
-    left: -35px;
-    transform: translateY(-50%) rotate(15deg);
-    z-index: -1;
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    width: 28px;
-    height: 28px;
-    background: #93ecff;
-    opacity: 0.5;
-    clip-path: polygon(
-      50% 0%,
-      60% 40%,
-      100% 50%,
-      60% 60%,
-      50% 100%,
-      40% 60%,
-      0% 50%,
-      40% 40%
-    );
-    pointer-events: none;
-    top: 50%;
-    right: -35px;
-    transform: translateY(-50%) rotate(-25deg);
-    z-index: -1;
-  }
-  
-  &:nth-child(odd) .speaker-header::before {
-    content: '';
-    position: absolute;
-    width: 22px;
-    height: 22px;
-    background: #adffce;
-    opacity: 0.45;
-    clip-path: polygon(
-      50% 0%,
-      60% 40%,
-      100% 50%,
-      60% 60%,
-      50% 100%,
-      40% 60%,
-      0% 50%,
-      40% 40%
-    );
-    pointer-events: none;
-    top: 15px;
-    left: -30px;
-    transform: rotate(45deg);
-    z-index: -1;
-  }
-  
-  &:nth-child(even) .speaker-header::after {
-    content: '';
-    position: absolute;
-    width: 22px;
-    height: 22px;
-    background: #f4f593;
-    opacity: 0.5;
-    clip-path: polygon(
-      50% 0%,
-      60% 40%,
-      100% 50%,
-      60% 60%,
-      50% 100%,
-      40% 60%,
-      0% 50%,
-      40% 40%
-    );
-    pointer-events: none;
-    bottom: 15px;
-    right: -30px;
-    transform: rotate(-30deg);
-    z-index: -1;
-  }
-  
-  &:nth-child(3n+2)::before {
-    width: 20px;
-    height: 20px;
-    top: 30%;
-    left: -32px;
-    background: #ffccb7;
-    opacity: 0.55;
-    transform: translateY(-50%) rotate(60deg);
-  }
-  
-  &:nth-child(4n+1)::after {
-    width: 24px;
-    height: 24px;
-    top: 70%;
-    right: -33px;
-    background: #adffce;
-    opacity: 0.48;
-    transform: translateY(-50%) rotate(-60deg);
-  }
-  
-  &:nth-child(5n+3)::before {
-    width: 18px;
-    height: 18px;
-    top: 15%;
-    left: -30px;
-    background: #f4f593;
-    opacity: 0.6;
-    transform: translateY(-50%) rotate(30deg);
-  }
+  /* Removed all decorative pseudo-elements to not conflict with callout arrows */
 }
 
 .speaker-header {

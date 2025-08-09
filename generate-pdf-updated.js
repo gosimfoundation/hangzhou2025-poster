@@ -155,10 +155,21 @@ async function generateUpdatedPDF() {
         // Apply alternating backgrounds (non-transparent)
         if (speaker.classList.contains('bg-pink')) {
           speaker.style.backgroundColor = 'rgb(255, 230, 240)';
+          speaker.style.setProperty('--arrow-color', 'rgb(255, 230, 240)');
+          speaker.style.setProperty('--arrow-border', 'rgba(255, 200, 220, 0.3)');
         } else if (speaker.classList.contains('bg-white')) {
           speaker.style.backgroundColor = 'rgb(255, 255, 255)';
+          speaker.style.setProperty('--arrow-color', 'rgb(255, 255, 255)');
+          speaker.style.setProperty('--arrow-border', 'rgba(200, 200, 200, 0.3)');
         }
         speaker.style.borderRadius = '15px';
+        speaker.style.position = 'relative';
+        speaker.style.marginBottom = '40px';
+        speaker.style.overflow = 'visible';
+        
+        // CSS pseudo-elements are now working, so no need to add arrows via JavaScript
+        // Just log for debugging
+        console.log(`Speaker ${index}: CSS arrows should be visible`);
         
         const header = speaker.querySelector('.speaker-header');
         if (!header) return;
@@ -282,17 +293,68 @@ async function generateUpdatedPDF() {
           font-size: 2.5rem !important;
         }
         
-        /* Speaker box alternating backgrounds */
+        /* Speaker box alternating backgrounds and callout arrows */
         .speaker-poster {
           border-radius: 15px !important;
+          position: relative !important;
+          margin-bottom: 20px !important;
         }
         
         .speaker-poster.bg-white {
           background-color: rgb(255, 255, 255) !important;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+          --arrow-color: rgb(255, 255, 255);
+          --arrow-border: rgba(200, 200, 200, 0.3);
         }
         
         .speaker-poster.bg-pink {
           background-color: rgb(255, 230, 240) !important;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+          --arrow-color: rgb(255, 230, 240);
+          --arrow-border: rgba(255, 200, 220, 0.3);
+        }
+        
+        /* Callout arrows */
+        .speaker-poster::before {
+          content: '' !important;
+          position: absolute !important;
+          bottom: -12px !important;
+          width: 0 !important;
+          height: 0 !important;
+          border-left: 15px solid transparent !important;
+          border-right: 15px solid transparent !important;
+          border-top: 12px solid var(--arrow-color) !important;
+          z-index: 2 !important;
+        }
+        
+        .speaker-poster::after {
+          content: '' !important;
+          position: absolute !important;
+          bottom: -13px !important;
+          width: 0 !important;
+          height: 0 !important;
+          border-left: 16px solid transparent !important;
+          border-right: 16px solid transparent !important;
+          border-top: 13px solid var(--arrow-border) !important;
+          z-index: 1 !important;
+        }
+        
+        .speaker-poster.photo-left::before {
+          left: 30% !important;
+        }
+        
+        .speaker-poster.photo-left::after {
+          left: calc(30% - 1px) !important;
+        }
+        
+        .speaker-poster.photo-right::before {
+          right: 30% !important;
+          left: auto !important;
+        }
+        
+        .speaker-poster.photo-right::after {
+          right: calc(30% - 1px) !important;
+          left: auto !important;
         }
         
         /* Speaker alignment */
