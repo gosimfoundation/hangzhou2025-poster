@@ -39,7 +39,7 @@ async function generateUpdatedPDF() {
     });
     
     console.log('🌐 Loading page...');
-    await page.goto('http://localhost:4322', { 
+    await page.goto('http://localhost:4321', { 
       waitUntil: ['networkidle0', 'domcontentloaded'],
       timeout: 60000 
     });
@@ -188,15 +188,21 @@ async function generateUpdatedPDF() {
         if (photo) {
           photo.style.flexShrink = '0';
           photo.style.width = '60px';
-          photo.style.height = '60px';
+          photo.style.height = '80px';
           photo.style.borderRadius = '20px';
+          photo.style.background = 'transparent';
+          const img = photo.querySelector('img');
+          if (img) {
+            img.style.objectFit = 'contain';
+            img.style.objectPosition = 'center';
+          }
         }
         
         const placeholder = speaker.querySelector('.speaker-photo-placeholder');
         if (placeholder) {
           placeholder.style.flexShrink = '0';
           placeholder.style.width = '60px';
-          placeholder.style.height = '60px';
+          placeholder.style.height = '80px';
           placeholder.style.borderRadius = '20px';
         }
         
@@ -232,6 +238,60 @@ async function generateUpdatedPDF() {
           talkTitle.style.textAlign = 'left';
         }
       });
+
+      // Apply topics container gradient with hangzhou-logo01.svg background
+      const topicsContainer = document.querySelector('.topics-container');
+      if (topicsContainer) {
+        // Get the background image URL from the style attribute
+        const styleAttr = topicsContainer.getAttribute('style');
+        let bgImageUrl = '';
+        if (styleAttr) {
+          const match = styleAttr.match(/--topics-bg:\s*url\(['"]?([^'")]+)['"]?\)/);
+          if (match) {
+            bgImageUrl = `url('${match[1]}')`;
+          }
+        }
+        
+        // Don't clear backgrounds - just override them properly
+        // The issue is the semi-transparent gradient needs a white base
+        
+        // Apply gradient exactly like the other sections (highlights, header)
+        const pinkToGreenGradient = 'linear-gradient(to right, #f5bcd8, #a9e5cf)';
+        
+        // Use solid colors instead of semi-transparent to avoid shadow effect
+        topicsContainer.style.setProperty('background', pinkToGreenGradient, 'important');
+        
+        // Add SVG variable for pseudo-element
+        if (bgImageUrl) {
+          topicsContainer.style.setProperty('position', 'relative', 'important');
+          topicsContainer.style.setProperty('--svg-bg', bgImageUrl, 'important');
+        }
+        
+        // Check what was actually applied
+        const finalStyle = window.getComputedStyle(topicsContainer);
+        console.log('Topics background after application:', finalStyle.background);
+        
+        // Apply the same gradient to header as speaker box section
+        const header = document.querySelector('.page-header');
+        if (header) {
+          header.style.removeProperty('background-image');
+          header.style.removeProperty('background');
+          
+          // Get header background image
+          const headerBgImage = window.getComputedStyle(header).backgroundImage;
+          const bgImageMatch = headerBgImage.match(/url\([^)]+\)/);
+          const bgImage = bgImageMatch ? bgImageMatch[0] : '';
+          
+          // Apply gradient with opaque left and transparent right to show background image
+          const headerGradient = 'linear-gradient(to right, rgba(245, 188, 216, 1) 0%, rgba(245, 188, 216, 1) 60%, rgba(245, 188, 216, 0.9) 70%, rgba(169, 229, 207, 0.7) 85%, rgba(169, 229, 207, 0.6) 100%)';
+          header.style.setProperty('background', `${headerGradient}${bgImage ? ', ' + bgImage : ''}`, 'important');
+          header.style.setProperty('background-size', 'cover', 'important');
+          header.style.setProperty('background-position', '80% bottom', 'important');
+          
+          const headerStyle = window.getComputedStyle(header);
+          console.log('Header gradient after application:', headerStyle.backgroundImage);
+        }
+      }
 
       // Fix white strips
       const wrapper = document.querySelector('.page-wrapper');
@@ -392,8 +452,14 @@ async function generateUpdatedPDF() {
         .speaker-photo-placeholder {
           flex-shrink: 0 !important;
           width: 60px !important;
-          height: 60px !important;
+          height: 80px !important;
           border-radius: 20px !important;
+          background: transparent !important;
+        }
+        
+        .speaker-photo img {
+          object-fit: contain !important;
+          object-position: center !important;
         }
         
         html, body {
@@ -410,6 +476,68 @@ async function generateUpdatedPDF() {
           max-width: 480px !important;
           margin: 0 auto !important;
           padding: 0 !important;
+        }
+        
+        /* Header gradient with opaque left mask and transparent right */
+        .page-header {
+          background: linear-gradient(to right, rgba(245, 188, 216, 1) 0%, rgba(245, 188, 216, 1) 60%, rgba(245, 188, 216, 0.9) 70%, rgba(169, 229, 207, 0.7) 85%, rgba(169, 229, 207, 0.6) 100%), var(--header-bg) !important;
+          background-size: cover !important;
+          background-position: 80% bottom !important;
+        }
+        
+        /* Topics container gradient - use solid colors to avoid shadow */
+        .topics-container {
+          background: linear-gradient(to right, #f5bcd8, #a9e5cf) !important;
+          position: relative !important;
+        }
+        
+        /* Add SVG as pseudo-element with lower opacity */
+        .topics-container::before {
+          content: '' !important;
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          background-image: var(--svg-bg) !important;
+          background-size: 100% !important;
+          background-position: center top !important;
+          background-repeat: no-repeat !important;
+          opacity: 0.1 !important;
+          z-index: 0 !important;
+          pointer-events: none !important;
+        }
+        
+        .topics-container > * {
+          position: relative !important;
+          z-index: 1 !important;
+        }
+        
+        /* Topics header font size to match speaker title */
+        .topics-header h1 {
+          font-size: 2.5rem !important;
+          font-weight: 700 !important;
+          color: white !important;
+        }
+        
+        .topics-header h3 {
+          color: white !important;
+        }
+        
+        /* Topic names in white */
+        .topic-name {
+          color: white !important;
+        }
+        
+        /* Bigger topic icons for PDF */
+        .icon-wrapper {
+          width: 36px !important;
+          height: 36px !important;
+        }
+        
+        .topic-icon {
+          width: 28px !important;
+          height: 28px !important;
         }
       `
     });
