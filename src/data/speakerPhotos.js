@@ -1,16 +1,16 @@
-// Mapping of speaker names to their photo filenames
+// Mapping of speaker names to their photo filenames (using Ghibli-style images)
 export const speakerPhotos = {
-  'Martino Russi': 'martino-russi.jpeg',
-  'Jinwei Gu': 'jinwei-gu.jpg',
-  '夏璇': 'xuan-xia.jpg',
-  '岑明': 'cen-ming.jpg',
-  '尹云鹏': 'yin-yun-peng.jpg',
-  '李涛': 'tao-li.jpg',
-  '王鹏伟': 'wang-peng-wei.jpg',
-  '岑汝平': 'ruping-cen.jpg',
-  'Edgar Riba': 'edgar-riba.jpeg',
-  'Jian Shi': 'jian-shi.jpg',
-  'Xavier': 'xavier.jpg'
+  'Martino Russi': 'ghibli_martino-russi.png',
+  'Jinwei Gu': 'ghibli_jinwei-gu.png',
+  '夏璇': 'ghibli_xuan-xia.png',
+  '岑明': 'ghibli_cen-ming.png',
+  '尹云鹏': 'ghibli_yin-yun-peng.png',
+  '李涛': 'ghibli_tao-li.png',
+  '王鹏伟': 'ghibli_wang-peng-wei.png',
+  '岑汝平': 'ghibli_ruping-cen.png',
+  'Edgar Riba': 'ghibli_edgar-riba.png',
+  'Jian Shi': 'ghibli_jian-shi.png',
+  'Xavier': 'ghibli_xavier.png'
 };
 
 export function getSpeakerPhoto(name) {

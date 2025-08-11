@@ -4,6 +4,7 @@ import startupsIcon from '../assets/icons/startups.svg';
 import foundationIcon from '../assets/icons/foundation.svg';
 import collaborationIcon from '../assets/icons/collaboration.svg';
 import networkingIcon from '../assets/icons/networking.svg';
+import hangzhouLogo from '../assets/images/header/hagnzhhou-logo02.svg';
 
 const topicsRow1 = [
   {
@@ -40,7 +41,7 @@ const topicsRow3 = [
 const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
 ---
 
-<div class="topics-container">
+<div class="topics-container" style={`--topics-bg: url('${hangzhouLogo.src}')`}>
   <div class="topics-header">
     <h1>5大主题论坛</h1>
     <h3>5 Parallel Tracks</h3>
@@ -49,7 +50,7 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
     <!-- Row 1 -->
     {topicsRow1.map((topic) => (
       <div class="topic-item">
-        <div class="topic-text-box horizontal" style={`background: ${topic.color}80;`}>
+        <div class={`topic-text-box horizontal ${topic.name === '具身智能' ? 'embodied-ai' : ''}`} style={topic.name === '具身智能' ? '' : `background: ${topic.color}80;`}>
           <div class="icon-wrapper inline">
             <img src={topic.icon} alt={topic.name} class="topic-icon" />
           </div>
@@ -87,52 +88,17 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
     width: 100%;
     max-width: 480px;
     margin: 0 auto;
-    background: transparent;
+    background: 
+      linear-gradient(to right, rgba(245, 188, 216, 0.85) 0%, rgba(169, 229, 207, 0.85) 100%),
+      var(--topics-bg);
+    background-size: auto, 100%;
+    background-position: center, center top;
+    background-repeat: no-repeat;
     padding: 1.5rem;
     border-radius: 0;
     margin-bottom: 0;
     position: relative;
     overflow: hidden;
-  }
-  
-  .topics-container::before,
-  .topics-container::after,
-  .topics-grid::before,
-  .topics-grid::after {
-    content: '';
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background: #fffddf;
-    opacity: 0.3;
-    clip-path: polygon(
-      50% 0%,
-      60% 40%,
-      100% 50%,
-      60% 60%,
-      50% 100%,
-      40% 60%,
-      0% 50%,
-      40% 40%
-    );
-    pointer-events: none;
-    z-index: 0;
-  }
-  
-  .topics-container::before {
-    top: 10px;
-    left: 20px;
-    transform: rotate(15deg);
-    background: #fffddf;
-    opacity: 0.3;
-  }
-  
-  .topics-container::after {
-    bottom: 20px;
-    right: 30px;
-    transform: rotate(-20deg);
-    background: #93ecff;
-    opacity: 0.25;
   }
   
   .topics-grid {
@@ -166,16 +132,16 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
   }
   
   .topics-header h1 {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     font-weight: 700;
-    color: #333;
+    color: white;
     margin: 0 0 0.5rem 0;
   }
   
   .topics-header h3 {
     font-size: 1rem;
     font-weight: 400;
-    color: #666;
+    color: white;
     margin: 0;
   }
   
@@ -198,8 +164,8 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
   }
   
   .icon-wrapper {
-    width: 24px;
-    height: 24px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -222,8 +188,8 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
   }
   
   .topic-icon {
-    width: 16px;
-    height: 16px;
+    width: 28px;
+    height: 28px;
     filter: invert(45%) sepia(61%) saturate(500%) hue-rotate(310deg) brightness(95%) contrast(90%);
   }
   
@@ -240,9 +206,13 @@ const allTopics = [...topicsRow1, topicRow2, ...topicsRow3];
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   }
   
+  .topic-text-box.embodied-ai {
+    background: linear-gradient(to right, #f4f59380, #fffddf80);
+  }
+  
   .topic-name {
     font-size: 1.1rem;
-    color: #333;
+    color: white;
     line-height: 1.2;
     font-weight: 600;
     position: absolute;

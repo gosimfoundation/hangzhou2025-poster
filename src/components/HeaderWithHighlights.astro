@@ -63,7 +63,7 @@ const highlights = [
     <div class="header-content">
       <div class="title-container">
         <h1 class="title-line">GOSIM</h1>
-        <h1 class="title-line yellow">HANGZHOU 2025</h1>
+        <h1 class="title-line"><span class="yellow">HANGZHOU</span> <span class="white">2025</span></h1>
       </div>
       <img src={gosimLogo.src} alt="GOSIM Logo" class="logo" />
     </div>
@@ -144,7 +144,7 @@ const highlights = [
   .page-header {
     width: 100%;
     background: 
-      linear-gradient(to right, rgba(245, 188, 216, 1) 0%, rgba(245, 188, 216, 0.98) 20%, rgba(245, 188, 216, 0.95) 40%, rgba(169, 229, 207, 0.6) 60%, rgba(169, 229, 207, 0.3) 100%),
+      linear-gradient(to right, rgba(245, 188, 216, 1) 0%, rgba(245, 188, 216, 1) 60%, rgba(245, 188, 216, 0.9) 70%, rgba(169, 229, 207, 0.7) 85%, rgba(169, 229, 207, 0.6) 100%),
       var(--header-bg);
     background-size: cover;
     background-position: 80% bottom;
@@ -170,7 +170,7 @@ const highlights = [
   }
   
   .logo {
-    height: 18px;
+    height: 28px;
     width: auto;
     filter: brightness(0) invert(1);
     position: absolute;
@@ -182,7 +182,7 @@ const highlights = [
   .title-line {
     font-family: 'Bebas Neue', sans-serif;
     color: white;
-    font-size: 3rem;
+    font-size: 4rem;
     font-weight: 400;
     margin: 0;
     letter-spacing: 2px;
@@ -190,8 +190,12 @@ const highlights = [
     text-transform: uppercase;
   }
   
-  .title-line.yellow {
-    color: #f9e9cd;
+  .title-line .yellow {
+    color: #fdff94;
+  }
+  
+  .title-line .white {
+    color: white;
   }
   
   .event-info-section {
@@ -219,7 +223,7 @@ const highlights = [
   
   .location {
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 400;
     color: #fff;
   }
   
@@ -370,13 +374,13 @@ const highlights = [
   
   @media (max-width: 480px) {    
     .logo {
-      height: 15px;
+      height: 25px;
       right: 0.3rem;
       top: 0.3rem;
     }
     
     .title-line {
-      font-size: 2.5rem;
+      font-size: 3.5rem;
       padding-left: 0;
     }
     
